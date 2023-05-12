@@ -1,0 +1,81 @@
+---
+- name : Configure MACsec on Gig 1/0/17 Playbook using YANG Models
+  hosts: iosxe
+  connection: netconf
+  gather_facts: no
+
+  vars:
+    ansible_connection: netconf
+
+  vars_files:
+    - ~/clus2023-devnet-2111/vaults/ciscolive.vault
+
+  tasks:
+    - name: Configure PSK MKA Key Chain - CAK & CKN
+      netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <key>
+                  <chain xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-crypto">
+                    <name>yang-mka-keys</name>
+                    <macsec xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="create"/>
+                    <key>
+                      <id>1234</id>
+                      <cryptographic-algorithm xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="create">aes-128-cmac</cryptographic-algorithm>
+                      <key-string>
+                        <key>11111111111111111111111111111111</key>
+                      </key-string>
+                    </key>
+                  </chain>
+                </key>
+              </native>
+            </config>
+
+    - name: Configure MKA Policy w AES-128-GCM Cipher Suite
+      netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <mka>
+                  <policy xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-mka">
+                    <name>MKA_G1-0-17</name>
+                    <macsec-cipher-suite>gcm-aes-128</macsec-cipher-suite>
+                  </policy>
+                </mka>
+              </native>
+            </config>
+
+
+    - name: Configure the Interface for MKA PSK, MKA Policy & MACsec Network Link
+      netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <interface>
+                  <GigabitEthernet>
+                    <name>1/0/17</name>
+                    <description>MACsec PSK Link</description>
+                    <shutdown xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="remove"/>
+                    <macsec-option xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-switch">
+                      <macsec>
+                        <network-link/>
+                      </macsec>
+                    </macsec-option>
+                    <mka xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-mka">
+                      <policy>
+                        <name>MKA_G1-0-17</name>
+                      </policy>
+                      <pre-shared-key>
+                        <key-chain>
+                          <name>yang-mka-keys</name>
+                        </key-chain>
+                      </pre-shared-key>
+                    </mka>
+                  </GigabitEthernet>
+                </interface>
+              </native>
+            </config>
+
+
+

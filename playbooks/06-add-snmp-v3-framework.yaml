@@ -1,0 +1,83 @@
+---
+- name:  This Playbook will create an SNMPv3 Framework on an IOS XE Device
+  hosts: iosxe
+  gather_facts: false
+  connection: network_cli
+
+  vars:
+    ansible_network_os: cisco.ios.ios
+    ansible_network_cli_ssh_type: libssh
+
+  #vars_files:
+  #  - ~/clus2023-devnet-2111/vaults/ciscolive.vault
+
+  tasks:
+    - name: Create An ACL for Permitted SNMP traffic
+      cisco.ios.ios_acls:
+        config:
+          - afi: ipv4
+            acls:
+              - name: snmp-access
+                acl_type: standard
+                aces:
+                - grant: permit
+                  source:
+                   address: 192.168.8.0
+                   wildcard_bits: 0.0.7.255
+
+    - name: Create Read Only and Read Write SNMPv3 Views
+      cisco.ios.ios_snmp_server:
+        config:
+          views:
+            - name: snmp-v3-ReadOnly-View
+              family_name: iso
+              included: true
+
+            - name: snmp-v3-ReadWrite-View
+              family_name: iso
+              included: true
+
+    - name: Create Read Only and Read Write SNMPv3 Groups
+      cisco.ios.ios_snmp_server:
+        config:
+          groups:
+            - group: snmp-v3-ReadOnly
+              version: v3
+              version_option: priv
+              acl_v4: snmp-access
+              read: snmp-v3-ReadOnly-View
+
+            - group: snmp-v3-ReadWrite
+              version: v3
+              version_option: priv
+              acl_v4: snmp-access
+              read: snmp-v3-ReadWrite-View
+
+    - name: Create An SNMPv3 User
+      cisco.ios.ios_snmp_server:
+        config:
+          users:
+            - username: charlie-ReadOnly
+              group: snmp-v3-ReadOnly
+              version: v3
+              authentication: 
+               algorithm: sha
+               password: charlies-auth-pass
+              encryption:
+               priv: aes
+               priv_option: 128
+               password: charlies-priv-pass
+              acl_v4: snmp-access
+
+            - username: kashvi-ReadWrite
+              group: snmp-v3-ReadWrite
+              version: v3
+              authentication: 
+               algorithm: sha
+               password: kashvis-auth-pass
+              encryption:
+               priv: aes
+               priv_option: 192
+               password: kashvi-priv-pass
+              acl_v4: snmp-access
+ 

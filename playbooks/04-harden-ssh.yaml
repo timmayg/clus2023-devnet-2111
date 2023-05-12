@@ -5,7 +5,7 @@
   gather_facts: false
 
   vars_files:
-    - /etc/ansible/vaults/johnny-admin.vault
+    - ~/clus2023-devnet-2111/vaults/ciscolive.vault
 
   tasks:
     - name: Configure SSH Server for Keyboard Authentication
