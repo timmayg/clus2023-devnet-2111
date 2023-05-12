@@ -22,8 +22,8 @@
                 aces:
                 - grant: permit
                   source:
-                   address: 192.168.8.0
-                   wildcard_bits: 0.0.7.255
+                   address: 10.1.1.0
+                   wildcard_bits: 0.0.0.255
 
     - name: Create Read Only and Read Write SNMPv3 Views
       cisco.ios.ios_snmp_server:
