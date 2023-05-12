@@ -62,11 +62,11 @@
               version: v3
               authentication: 
                algorithm: sha
-               password: charlies-auth-pass
+               password: ciscolive123
               encryption:
                priv: aes
                priv_option: 128
-               password: charlies-priv-pass
+               password: ciscolive123
               acl_v4: snmp-access
 
             - username: kashvi-ReadWrite
@@ -74,10 +74,10 @@
               version: v3
               authentication: 
                algorithm: sha
-               password: kashvis-auth-pass
+               password: ciscolive123
               encryption:
                priv: aes
-               priv_option: 192
-               password: kashvi-priv-pass
+               priv_option: 128
+               password: ciscolive123
               acl_v4: snmp-access
  
