@@ -11,6 +11,23 @@
     - ~/clus2023-devnet-2111/vaults/ciscolive.vault
 
   tasks:
+    - name: Admin Shutdown Interface Before MACsec Config
+      netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <interface>
+                  <GigabitEthernet>
+                    <name>1/0/1</name>
+                    <shutdown/>
+                  </GigabitEthernet>
+                </interface>
+              </native>
+            </config>
+
+
+
+
     - name: Configure PSK MKA Key Chain - CAK & CKN
       netconf_config:
         xml: |
@@ -77,5 +94,16 @@
               </native>
             </config>
 
-
+    - name: Admin No Shutdown Interface After MACsec Config
+      netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <interface>
+                  <GigabitEthernet>
+                    <name>1/0/1</name>
+                  </GigabitEthernet>
+                </interface>
+              </native>
+            </config>
 
