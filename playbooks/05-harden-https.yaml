@@ -4,9 +4,6 @@
   connection: netconf
   gather_facts: false
 
-  vars_files:
-    - /etc/ansible/vaults/authc.vault
-
   tasks:
     - name: Task to Enable Secure HTTPS CipherSuites
       netconf_config:

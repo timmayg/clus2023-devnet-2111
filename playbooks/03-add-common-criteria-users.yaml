@@ -4,9 +4,6 @@
   connection: network_cli
   gather_facts: false
 
-  vars_files:
-    - /etc/ansible/vaults/johnny-admin.vault
-
   tasks:
     - name: Add a Local User that complies with Common Criteria Policy
       cisco.ios.ios_config:
