@@ -8,8 +8,8 @@
     ansible_network_os: cisco.ios.ios
     ansible_network_cli_ssh_type: libssh
 
-  #vars_files:
-  #  - ~/clus2023-devnet-2111/vaults/ciscolive.vault
+  vars_files:
+    - ~/clus2023-devnet-2111/vaults/ciscolive.vault
 
   tasks:
     - name: Create An ACL for Permitted SNMP traffic
