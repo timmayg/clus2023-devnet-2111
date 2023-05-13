@@ -1,5 +1,5 @@
 ---
-- name : Configure MACsec on Gig 1/0/17 Playbook using YANG Models
+- name : Configure MACsec on Gig 1/0/1 Playbook using YANG Models
   hosts: iosxe
   connection: netconf
   gather_facts: no
@@ -36,10 +36,12 @@
                 <key>
                   <chain xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-crypto">
                     <name>yang-mka-keys</name>
-                    <macsec xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="create"/>
+                    <macsec/>
                     <key>
                       <id>1234</id>
-                      <cryptographic-algorithm xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="create">aes-256-cmac</cryptographic-algorithm>
+                      <cryptographic-algorithm-choice>
+                        <macsec>aes-256-cmac</macsec>
+                      </cryptographic-algorithm-choice>
                       <key-string>
                         <key>1111111111111111111111111111111111111111111111111111111111111111</key>
                       </key-string>
@@ -48,6 +50,7 @@
                 </key>
               </native>
             </config>
+
 
     - name: Configure MKA Policy w AES-256-GCM Cipher Suite
       netconf_config:
