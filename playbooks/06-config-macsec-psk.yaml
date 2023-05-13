@@ -39,7 +39,7 @@
                     <macsec xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="create"/>
                     <key>
                       <id>1234</id>
-                      <cryptographic-algorithm xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="create">aes-128-cmac</cryptographic-algorithm>
+                      <cryptographic-algorithm xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="create">aes-256-cmac</cryptographic-algorithm>
                       <key-string>
                         <key>1111111111111111111111111111111111111111111111111111111111111111</key>
                       </key-string>
