@@ -1,8 +1,8 @@
 ---
-- name : Configure MACsec on Gig 1/0/1 Playbook using YANG Models
+- name: Configure MACsec on Gig 1/0/1 Playbook using YANG Models
   hosts: iosxe
   connection: netconf
-  gather_facts: no
+  gather_facts: false
 
   vars:
     ansible_connection: netconf
@@ -12,7 +12,7 @@
 
   tasks:
     - name: Admin Shutdown Interface Before MACsec Config
-      netconf_config:
+      ansible.netcommon.netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
@@ -26,10 +26,8 @@
             </config>
 
 
-
-
     - name: Configure PSK MKA Key Chain - CAK & CKN
-      netconf_config:
+      ansible.netcommon.netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
@@ -53,7 +51,7 @@
 
 
     - name: Configure MKA Policy w AES-256-GCM Cipher Suite
-      netconf_config:
+      ansible.netcommon.netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
@@ -68,7 +66,7 @@
 
 
     - name: Configure the Interface for MKA PSK, MKA Policy & MACsec Network Link
-      netconf_config:
+      ansible.netcommon.netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
@@ -97,8 +95,9 @@
               </native>
             </config>
 
+
     - name: Admin No Shutdown Interface After MACsec Config
-      netconf_config:
+      ansible.netcommon.netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
@@ -109,4 +108,3 @@
                 </interface>
               </native>
             </config>
-
