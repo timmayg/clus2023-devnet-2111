@@ -74,7 +74,6 @@
                   <GigabitEthernet>
                     <name>1/0/1</name>
                     <description>MACsec PSK Link</description>
-                    <shutdown xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="remove"/>
                     <macsec-option xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-switch">
                       <macsec>
                         <network-link/>
@@ -96,6 +95,8 @@
             </config>
 
 
+
+
     - name: Admin No Shutdown Interface After MACsec Config
       ansible.netcommon.netconf_config:
         xml: |
@@ -108,3 +109,4 @@
                 </interface>
               </native>
             </config>
+            
