@@ -29,9 +29,6 @@
   connection: netconf
   gather_facts: no
 
-  vars_files:
-    - ~/clus2023-devnet-2111/vaults/ciscolive.vault
-
   tasks:
     - name: NETCONF RPC
       netconf_config:
@@ -42,7 +39,6 @@
                   <GigabitEthernet>
                     <name>1/0/1</name>
                     <description>MACsec PSK Link</description>
-                    <shutdown xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="remove"/>
                     <macsec-option xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-switch">
                       <macsec>
                         <network-link/>
@@ -62,6 +58,4 @@
                 </interface>
               </native>
             </config>
-
-
 
