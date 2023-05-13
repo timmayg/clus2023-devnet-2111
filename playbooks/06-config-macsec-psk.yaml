@@ -41,7 +41,7 @@
                       <id>1234</id>
                       <cryptographic-algorithm xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="create">aes-128-cmac</cryptographic-algorithm>
                       <key-string>
-                        <key>11111111111111111111111111111111</key>
+                        <key>1111111111111111111111111111111111111111111111111111111111111111</key>
                       </key-string>
                     </key>
                   </chain>
@@ -49,7 +49,7 @@
               </native>
             </config>
 
-    - name: Configure MKA Policy w AES-128-GCM Cipher Suite
+    - name: Configure MKA Policy w AES-256-GCM Cipher Suite
       netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
@@ -57,7 +57,7 @@
                 <mka>
                   <policy xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-mka">
                     <name>MKA_G1-0-1</name>
-                    <macsec-cipher-suite>gcm-aes-128</macsec-cipher-suite>
+                    <macsec-cipher-suite>gcm-aes-256</macsec-cipher-suite>
                   </policy>
                 </mka>
               </native>
