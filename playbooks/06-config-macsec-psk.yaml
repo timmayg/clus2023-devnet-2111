@@ -66,7 +66,7 @@
 
 
     - name: Configure the Interface for MKA PSK, MKA Policy & MACsec Network Link
-      ansible.netcommon.netconf_config:
+      netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
