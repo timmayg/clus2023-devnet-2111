@@ -29,6 +29,9 @@
   connection: netconf
   gather_facts: no
 
+  vars_files:
+    - ~/clus2023-devnet-2111/vaults/ciscolive.vault
+
   tasks:
     - name: NETCONF RPC
       netconf_config:
