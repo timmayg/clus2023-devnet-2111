@@ -6,10 +6,8 @@
 
   vars_files:
     - ~/clus2023-devnet-2111/vaults/ciscolive.vault
-
-
   tasks:
-    - name: 06b Play to Configure MKA CKN and CAK
+    - name: 06b Task to Configure MKA CKN and CAK
       netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
@@ -24,7 +22,7 @@
                         <macsec>aes-256-cmac</macsec>
                       </cryptographic-algorithm-choice>
                       <key-string>
-                        <encryption/>
+                        <encryption>0</encryption>
                         <key>1234567812345678123456781234567812345678123456781234567812345678</key>
                       </key-string>
                     </key>
