@@ -25,7 +25,7 @@
                       </cryptographic-algorithm-choice>
                       <key-string>
                         <encryption/>
-                        <key>12345678123456781234567812345678</key>
+                        <key>1234567812345678123456781234567812345678123456781234567812345678</key>
                       </key-string>
                     </key>
                   </chain>
