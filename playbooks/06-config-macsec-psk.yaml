@@ -4,9 +4,6 @@
   connection: netconf
   gather_facts: false
 
-  vars:
-    ansible_connection: netconf
-
   vars_files:
     - ~/clus2023-devnet-2111/vaults/ciscolive.vault
 
