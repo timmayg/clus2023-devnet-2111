@@ -6,6 +6,7 @@
 
   vars_files:
     - ~/clus2023-devnet-2111/vaults/ciscolive.vault
+
   tasks:
     - name: 06e Task to No Shut Interface
       netconf_config:
@@ -15,7 +16,7 @@
                 <interface>
                   <GigabitEthernet>
                     <name>1/0/1</name>
-                    <shutdown xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="merge"/>
+                    <shutdown xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="delete"/>
                   </GigabitEthernet>
                 </interface>
               </native>
