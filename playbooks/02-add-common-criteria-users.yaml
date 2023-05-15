@@ -1,5 +1,5 @@
 ---
-- name: Playbook for Adding Local Users with Common Criteria Policy
+- name: 02 Playbook for Adding Local Users with Common Criteria Policy
   hosts: iosxe
   connection: network_cli
   gather_facts: false
@@ -8,7 +8,7 @@
     - ~/clus2023-devnet-2111/vaults/ciscolive.vault
 
   tasks:
-    - name: Add a Local User that complies with Common Criteria Policy
+    - name: 02 Add a Local User that complies with Common Criteria Policy
       cisco.ios.ios_config:
         lines:
           - username jhonny-apples privilege 15 common-criteria-policy COMMON-POLICY secret 8 $8$W1gdQsmGACDv8k$Nx/n2usXnOgVOgGu/We2TeUw2Ez3RoE8Y8s9X3eKxbs
