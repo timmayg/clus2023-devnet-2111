@@ -8,61 +8,7 @@
     - ~/clus2023-devnet-2111/vaults/ciscolive.vault
 
   tasks:
-    - name: Admin Shutdown Interface Before MACsec Config
-      ansible.netcommon.netconf_config:
-        xml: |
-            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
-              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
-                <interface>
-                  <GigabitEthernet>
-                    <name>1/0/1</name>
-                    <shutdown/>
-                  </GigabitEthernet>
-                </interface>
-              </native>
-            </config>
-
-
-    - name: Configure PSK MKA Key Chain - CAK & CKN
-      ansible.netcommon.netconf_config:
-        xml: |
-            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
-              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
-                <key>
-                  <chain xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-crypto">
-                    <name>yang-mka-keys</name>
-                    <macsec/>
-                    <key>
-                      <id>1234</id>
-                      <cryptographic-algorithm-choice>
-                        <macsec>aes-256-cmac</macsec>
-                      </cryptographic-algorithm-choice>
-                      <key-string>
-                        <key>1111111111111111111111111111111111111111111111111111111111111111</key>
-                      </key-string>
-                    </key>
-                  </chain>
-                </key>
-              </native>
-            </config>
-
-
-    - name: Configure MKA Policy w AES-256-GCM Cipher Suite
-      ansible.netcommon.netconf_config:
-        xml: |
-            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
-              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
-                <mka>
-                  <policy xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-mka">
-                    <name>MKA_G1-0-1</name>
-                    <macsec-cipher-suite>gcm-aes-256</macsec-cipher-suite>
-                  </policy>
-                </mka>
-              </native>
-            </config>
-
-
-    - name: Configure the Interface for MKA PSK, MKA Policy & MACsec Network Link
+    - name: 06a Task to Shutdown the Interface
       netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
@@ -70,19 +16,99 @@
                 <interface>
                   <GigabitEthernet>
                     <name>1/0/1</name>
-                    <description>MACsec PSK Link</description>
-                    <macsec-option xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-switch">
-                      <macsec>
-                        <network-link/>
-                      </macsec>
-                    </macsec-option>
+                    <shutdown xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="merge"/>
+                  </GigabitEthernet>
+                </interface>
+              </native>
+            </config>
+
+    - name: 06b Task to Configure MKA PSK CKN and CAK
+      netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <key>
+                  <chain xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-crypto">
+                    <name>MACSEC-KEY</name>
+                    <macsec/>
+                    <key>
+                      <id>1234</id>
+                      <cryptographic-algorithm-choice>
+                        <macsec>aes-256-cmac</macsec>
+                      </cryptographic-algorithm-choice>
+                      <key-string>
+                        <encryption>0</encryption>
+                        <key>1234567812345678123456781234567812345678123456781234567812345678</key>
+                      </key-string>
+                    </key>
+                  </chain>
+                </key>
+              </native>
+            </config>
+
+    - name: 06c Task to Configure MKA Policy
+      netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <mka>
+                  <policy xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-mka">
+                    <name>MKA_G-1-0-1</name>
+                    <macsec-cipher-suite>gcm-aes-256</macsec-cipher-suite>
+                  </policy>
+                  <suppress xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-mka">
+                    <syslogs>
+                      <sak-rekey>true</sak-rekey>
+                    </syslogs>
+                  </suppress>
+                </mka>
+              </native>
+            </config>
+
+    - name: 06d Task to Configure Interface Description
+      netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <interface>
+                  <GigabitEthernet>
+                    <name>1/0/1</name>
+                    <description>MACsec Encrypted Link</description>
+                  </GigabitEthernet>
+                </interface>
+              </native>
+            </config>
+
+    - name: 06e Task to Configure the Interface with the MKA Policy
+      netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <interface>
+                  <GigabitEthernet>
+                    <name>1/0/1</name>
                     <mka xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-mka">
                       <policy>
-                        <name>MKA_G1-0-1</name>
+                        <name>MKA_G-1-0-1</name>
                       </policy>
+                    </mka>
+                  </GigabitEthernet>
+                </interface>
+              </native>
+            </config>
+
+    - name: 06f Task to Configure the Interface with the MKA Key
+      netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <interface>
+                  <GigabitEthernet>
+                    <name>1/0/1</name>
+                    <mka xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-mka">
                       <pre-shared-key>
                         <key-chain>
-                          <name>yang-mka-keys</name>
+                          <name>MACSEC-KEY</name>
                         </key-chain>
                       </pre-shared-key>
                     </mka>
@@ -91,19 +117,34 @@
               </native>
             </config>
 
-
-
-
-    - name: Admin No Shutdown Interface After MACsec Config
-      ansible.netcommon.netconf_config:
+    - name: 06g Task to Configure MACsec Network Link on the Interface 
+      netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
                 <interface>
                   <GigabitEthernet>
                     <name>1/0/1</name>
+                    <macsec-option xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-switch">
+                      <macsec>
+                        <network-link/>
+                      </macsec>
+                    </macsec-option>
                   </GigabitEthernet>
                 </interface>
               </native>
             </config>
 
+    - name: 06e Task to No Shut Interface
+      netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <interface>
+                  <GigabitEthernet>
+                    <name>1/0/1</name>
+                    <shutdown xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="delete"/>
+                  </GigabitEthernet>
+                </interface>
+              </native>
+            </config>
