@@ -16,11 +16,11 @@
                 <interface>
                   <GigabitEthernet>
                     <name>1/0/1</name>
-                    <mka xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-mka">
-                      <policy>
-                        <name>MKA_G-1-0-1</name>
-                      </policy>
-                    </mka>
+                    <macsec-option xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-switch">
+                      <macsec>
+                        <network-link/>
+                      </macsec>
+                    </macsec-option>
                   </GigabitEthernet>
                 </interface>
               </native>
