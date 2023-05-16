@@ -9,7 +9,7 @@
 
   tasks:
     - name: 06a Task to Shutdown the Interface
-      netconf_config:
+      ansible.netcommon.netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
@@ -23,7 +23,7 @@
             </config>
 
     - name: 06b Task to Configure MKA PSK CKN and CAK
-      netconf_config:
+      ansible.netcommon.netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
@@ -47,7 +47,7 @@
             </config>
 
     - name: 06c Task to Configure MKA Policy
-      netconf_config:
+      ansible.netcommon.netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
@@ -66,7 +66,7 @@
             </config>
 
     - name: 06d Task to Configure Interface Description
-      netconf_config:
+      ansible.netcommon.netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
@@ -80,7 +80,7 @@
             </config>
 
     - name: 06e Task to Configure the Interface with the MKA Policy
-      netconf_config:
+      ansible.netcommon.netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
@@ -98,7 +98,7 @@
             </config>
 
     - name: 06f Task to Configure the Interface with the MKA Key
-      netconf_config:
+      ansible.netcommon.netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
@@ -117,8 +117,8 @@
               </native>
             </config>
 
-    - name: 06g Task to Configure MACsec Network Link on the Interface 
-      netconf_config:
+    - name: 06g Task to Configure MACsec Network Link on the Interface
+      ansible.netcommon.netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
@@ -136,7 +136,7 @@
             </config>
 
     - name: 06e Task to No Shut Interface
-      netconf_config:
+      ansible.netcommon.netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
