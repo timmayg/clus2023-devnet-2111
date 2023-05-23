@@ -1,5 +1,5 @@
 ---
-- name: 02 Playbook for Adding Local Users with Common Criteria Policy
+- name: 02 Playbook to Add Local Users with Common Criteria Policy
   hosts: iosxe
   connection: network_cli
   gather_facts: false
