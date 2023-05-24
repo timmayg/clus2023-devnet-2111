@@ -12,7 +12,7 @@
     - ~/clus2023-devnet-2111/vaults/ciscolive.vault
 
   tasks:
-    - name: Create An ACL for Permitted SNMP traffic
+    - name: 05a Create An ACL for Permitted SNMP traffic
       cisco.ios.ios_acls:
         config:
           - afi: ipv4
@@ -25,7 +25,7 @@
                       address: 10.1.1.0
                       wildcard_bits: 0.0.0.255
 
-    - name: Create Read Only and Read Write SNMPv3 Views
+    - name: 05b Create Read Only and Read Write SNMPv3 Views
       cisco.ios.ios_snmp_server:
         config:
           views:
@@ -37,7 +37,7 @@
               family_name: iso
               included: true
 
-    - name: Create Read Only and Read Write SNMPv3 Groups
+    - name: 05c Create Read Only and Read Write SNMPv3 Groups
       cisco.ios.ios_snmp_server:
         config:
           groups:
@@ -53,7 +53,7 @@
               acl_v4: snmp-access
               read: snmp-v3-ReadWrite-View
 
-    - name: Create An SNMPv3 User
+    - name: 05d Create An SNMPv3 User
       cisco.ios.ios_snmp_server:
         config:
           users:
