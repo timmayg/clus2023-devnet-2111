@@ -15,5 +15,5 @@
 
     - name: 06 Configure Encryption Key
       cisco.ios.ios_config:
-        lines: 
-          - key config-key password-encryption SUPER-SECRET
+        lines:
+          - key config-key password-encrypt SUPER-SECRET
