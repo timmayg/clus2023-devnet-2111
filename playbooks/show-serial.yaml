@@ -6,8 +6,8 @@
 
   tasks:
     - name: Get the facts
-      ios_facts:
-       gather_subset: all
+      cisco.ios.ios_facts:
+        gather_subset: all
 
     - name: Display model and serial number
       debug:
