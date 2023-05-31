@@ -17,7 +17,7 @@
                   <new-model xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-aaa"/>
                   <common-criteria xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-aaa">
                     <policy>COMMON-POLICY</policy>
-                    <char-changes>4</char-changes>
+                    <char-changes>3</char-changes>
                     <max-length>127</max-length>
                     <min-length>12</min-length>
                     <restrict-consecutive-letters/>
